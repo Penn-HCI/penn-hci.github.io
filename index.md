@@ -1,3 +1,0 @@
-# Penn HCI
-
-Coming soon.
