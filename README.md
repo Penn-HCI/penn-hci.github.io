@@ -33,7 +33,7 @@ All lab content lives in `src/data/*.json` and `public/`. You don't need to touc
 
 ### Adding or updating a person / picture
 
-1. Add the photo to `public/people/` (any common image format — jpg/png/webp — file name doesn't matter beyond being unique and reasonably named.
+1. Add the photo to `public/people/` (JPEG preferred — see [Image guidelines](#image-guidelines) below; file name doesn't matter beyond being unique and reasonably named).
 2. Edit `src/data/people.json`. Each person is added under one of these category arrays: `pis`, `postdocs`, `phds`, `alumni`, `students`, `collaborators`.
 
    ```json
@@ -66,8 +66,23 @@ Edit `src/data/publications.json` and add an entry to the array:
 }
 ```
 
-- `pdf` and `image` are both optional, but if included, drop the actual files into `public/papers/` first (PDF of the paper, PNG/JPG teaser image respectively) — the paths just need to match what's in `public/`.
+- `pdf` and `image` are both optional, but if included, drop the actual files into `public/papers/` first (PDF of the paper, JPEG teaser image — see [Image guidelines](#image-guidelines)) — the paths just need to match what's in `public/`.
 - `venue` and `year` populate the filter dropdowns on the publications page automatically — no need to register a new venue anywhere else.
+
+### Image guidelines
+
+Images get downloaded by every visitor, so oversized ones make the site noticeably slow to load — this has bitten us before (some portraits were several megabytes for a photo displayed at 200px wide).
+
+- **Prefer JPEG for photos** (portraits, paper teaser screenshots). PNG is lossless and produces much larger files for photographic content — only use PNG when you actually need transparency (e.g. a logo or icon with a transparent background).
+- **Resize before adding, don't rely on CSS to shrink it.** The browser still downloads the full file even if it's displayed smaller. Rough guidelines for this site's layout:
+  - **Portraits** (`public/people/`): displayed at ~200px wide. Resize to a **~450px max dimension** (covers retina displays with margin).
+  - **Paper teaser images** (`public/papers/*.{jpg,png}`): displayed at ~240px wide. Resize to a **~700px max dimension**.
+- A quick way to do both (resize + convert to JPEG) from the command line with ImageMagick:
+  ```sh
+  convert original.png -resize "700x700>" -strip -quality 85 public/papers/venue-year-shortname.jpg
+  ```
+  (`>` means "only shrink, never enlarge"; drop `-quality`/keep PNG output if the image needs transparency.)
+- The build warns (but won't fail) if any image in the output is over 2MB — check the terminal output of `npm run build`, or the GitHub Actions log, if you see that warning.
 
 ### Adding a course
 
