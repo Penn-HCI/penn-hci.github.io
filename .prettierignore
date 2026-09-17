@@ -1,0 +1,12 @@
+# Build output
+/dist
+/.astro
+
+# Node
+/node_modules
+
+# Public assets (binary or large)
+/public
+
+# Lockfiles
+package-lock.json

@@ -1,0 +1,270 @@
+---
+import Base from "../layouts/Base.astro";
+import publications from "../data/publications.json";
+import people from "../data/people.json";
+
+import "../styles/publications.scss";
+
+import dots from "../assets/4x4grydots.svg";
+import circleSmall from "../assets/lilredcircle.svg";
+import circleLarge from "../assets/biggrncircle.svg";
+
+// Extract lab members organized by category, preserving aliases
+const byName = (a: { name: string }, b: { name: string }) =>
+  a.name.localeCompare(b.name);
+const postdocs = [...people.postdocs].sort(byName);
+const phds = [...people.phds].sort(byName);
+const alumni = [...people.alumni].sort(byName);
+const pis = [...people.pis].sort(byName);
+
+const baseUrl = import.meta.env.BASE_URL;
+const base = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
+
+// Extract unique venues and years
+const venues = [...new Set(publications.map((p) => p.venue))].sort();
+const years = [...new Set(publications.map((p) => p.year))].sort(
+  (a, b) => b - a,
+);
+---
+
+<Base title="Publications">
+  <section class="publications-page">
+    <div class="publications-page__container content-width">
+      <h2 class="publications-page__title">Publications</h2>
+
+      <div class="publications-page__filters">
+        <div class="filter-group">
+          <label for="filter-author">Author:</label>
+          <select id="filter-author">
+            <option value="">All Authors</option>
+
+            {
+              postdocs.length > 0 && (
+                <>
+                  <option disabled>─────── Postdocs ───────</option>
+                  {postdocs.map((p) => (
+                    <option
+                      value={p.name}
+                      data-aliases={JSON.stringify((p as any).aliases ?? [])}
+                    >
+                      {p.name}
+                    </option>
+                  ))}
+                </>
+              )
+            }
+
+            {
+              phds.length > 0 && (
+                <>
+                  <option disabled>──────── PhDs ────────</option>
+                  {phds.map((p) => (
+                    <option
+                      value={p.name}
+                      data-aliases={JSON.stringify((p as any).aliases ?? [])}
+                    >
+                      {p.name}
+                    </option>
+                  ))}
+                </>
+              )
+            }
+
+            {
+              alumni.length > 0 && (
+                <>
+                  <option disabled>─────── Alumni ───────</option>
+                  {alumni.map((p) => (
+                    <option
+                      value={p.name}
+                      data-aliases={JSON.stringify((p as any).aliases ?? [])}
+                    >
+                      {p.name}
+                    </option>
+                  ))}
+                </>
+              )
+            }
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filter-venue">Venue:</label>
+          <select id="filter-venue">
+            <option value="">All Venues</option>
+            {venues.map((venue) => <option value={venue}>{venue}</option>)}
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filter-year">Year:</label>
+          <select id="filter-year">
+            <option value="">All Years</option>
+            {years.map((year) => <option value={year}>{year}</option>)}
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filter-pi">PI:</label>
+          <select id="filter-pi">
+            <option value="">All PIs</option>
+            {
+              pis.map((p) => (
+                <option
+                  value={p.name}
+                  data-aliases={JSON.stringify((p as any).aliases ?? [])}
+                >
+                  {p.name}
+                </option>
+              ))
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="publications-page__shapes">
+        <div class="publications-page__shapes__dots">
+          <img src={dots.src} />
+        </div>
+        <div class="publications-page__shapes__circle--small">
+          <img src={circleSmall.src} />
+        </div>
+        <div class="publications-page__shapes__circle--large">
+          <img src={circleLarge.src} />
+        </div>
+      </div>
+    </div>
+
+    <div class="publications-page__list content-width">
+      {
+        publications.map((pub) => (
+          <div
+            class="publication"
+            data-authors={pub.authors}
+            data-venue={pub.venue}
+            data-year={pub.year}
+          >
+            {pub.image ? (
+              <img class="publication__image" src={`${base}${pub.image}`} />
+            ) : (
+              <div
+                class="publication__image publication__image--placeholder"
+                aria-hidden="true"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="8" y1="13" x2="16" y2="13" />
+                  <line x1="8" y1="17" x2="16" y2="17" />
+                  <line x1="8" y1="9" x2="10" y2="9" />
+                </svg>
+              </div>
+            )}
+            <div class="publication__content">
+              <div class="publication__title">{pub.title}</div>
+              <div class="publication__authors">{pub.authors}</div>
+              <div class="publication__venue">
+                {pub.venue} {pub.year}
+              </div>
+              {pub.pdf && (
+                <div>
+                  <a class="publication__pdf" href={`${base}${pub.pdf}`}>
+                    pdf
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</Base>
+
+<script>
+  const filterAuthor = document.getElementById(
+    "filter-author",
+  ) as HTMLSelectElement;
+  const filterVenue = document.getElementById(
+    "filter-venue",
+  ) as HTMLSelectElement;
+  const filterYear = document.getElementById(
+    "filter-year",
+  ) as HTMLSelectElement;
+  const filterPI = document.getElementById("filter-pi") as HTMLSelectElement;
+
+  function syncFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    filterAuthor.value = params.get("author") ?? "";
+    filterVenue.value = params.get("venue") ?? "";
+    filterYear.value = params.get("year") ?? "";
+    filterPI.value = params.get("pi") ?? "";
+  }
+
+  function syncToURL() {
+    const params = new URLSearchParams();
+    if (filterAuthor.value) params.set("author", filterAuthor.value);
+    if (filterVenue.value) params.set("venue", filterVenue.value);
+    if (filterYear.value) params.set("year", filterYear.value);
+    if (filterPI.value) params.set("pi", filterPI.value);
+    const search = params.toString();
+    history.replaceState(
+      null,
+      "",
+      search ? `?${search}` : window.location.pathname,
+    );
+  }
+
+  function getNameVariants(select: HTMLSelectElement): string[] {
+    const option = select.options[select.selectedIndex];
+    if (!option || !option.value) return [];
+    const aliases: string[] = JSON.parse(option.dataset.aliases || "[]");
+    return [option.value, ...aliases];
+  }
+
+  function matchesAuthor(authors: string, variants: string[]): boolean {
+    return variants.some((name) => authors.includes(name));
+  }
+
+  function filterPublications() {
+    const authorVariants = getNameVariants(filterAuthor);
+    const piVariants = getNameVariants(filterPI);
+    const selectedVenue = filterVenue.value;
+    const selectedYear = filterYear.value;
+
+    document.querySelectorAll<HTMLElement>(".publication").forEach((pub) => {
+      const authors = pub.dataset.authors ?? "";
+      const venue = pub.dataset.venue ?? "";
+      const year = pub.dataset.year ?? "";
+
+      const show =
+        (!authorVariants.length || matchesAuthor(authors, authorVariants)) &&
+        (!selectedVenue || venue === selectedVenue) &&
+        (!selectedYear || year === selectedYear) &&
+        (!piVariants.length || matchesAuthor(authors, piVariants));
+
+      pub.style.display = show ? "" : "none";
+    });
+  }
+
+  function onFilterChange() {
+    syncToURL();
+    filterPublications();
+  }
+
+  filterAuthor.addEventListener("change", onFilterChange);
+  filterVenue.addEventListener("change", onFilterChange);
+  filterYear.addEventListener("change", onFilterChange);
+  filterPI.addEventListener("change", onFilterChange);
+
+  // Initialize from URL on load
+  syncFromURL();
+  filterPublications();
+</script>

@@ -1,0 +1,185 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  peopleByCategory: any;
+  categories?: string[];
+  showDetails?: boolean;
+  classPrefix?: string;
+  wrapSections?: boolean;
+}
+
+const CATEGORY_NAMES: Record<string, string> = {
+  pis: "Faculty",
+  postdocs: "Postdocs",
+  phds: "PhD Students",
+  alumni: "Alumni",
+  students: "Undergraduate & Masters Students",
+  collaborators: "Collaborators",
+};
+
+const {
+  peopleByCategory,
+  categories = Object.keys(CATEGORY_NAMES),
+  showDetails = false,
+  classPrefix = "people",
+  wrapSections = false,
+} = Astro.props;
+
+const categoryNames = CATEGORY_NAMES;
+
+const baseUrl = import.meta.env.BASE_URL;
+const base = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
+
+const combinedCategories = categories.filter((cat) =>
+  ["pis", "postdocs"].includes(cat),
+);
+const cardCategories = categories.filter((cat) => ["phds"].includes(cat));
+const listCategories = categories.filter((cat) =>
+  ["alumni", "students", "collaborators"].includes(cat),
+);
+
+const headingClass =
+  classPrefix === "people-page"
+    ? "people-page__group-title"
+    : "people__subheading";
+---
+
+{
+  combinedCategories.length > 0 && (
+    <div
+      class={
+        wrapSections
+          ? `${classPrefix}__combined-section content-width`
+          : `${classPrefix}__combined-section`
+      }
+    >
+      {combinedCategories.map((category) => (
+        <div class={`${classPrefix}__subsection`}>
+          <h3 class={headingClass}>{categoryNames[category]}</h3>
+          <div class={`${classPrefix}__cards-subsection`}>
+            {peopleByCategory[category].map((person: any) => (
+              <a
+                class="profile-card"
+                href={person.website}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img class="headshot" src={`${base}${person.picture}`} />
+                <div class="card-body flex-grow">
+                  <h4>{person.name}</h4>
+                  {showDetails && (
+                    <p>
+                      {person.role}, {person.affiliation}
+                    </p>
+                  )}
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+{
+  cardCategories.map((category) =>
+    wrapSections ? (
+      <>
+        <div class="content-width">
+          <h3 class={headingClass}>{categoryNames[category]}</h3>
+        </div>
+        <div class={`${classPrefix}__cards content-width`}>
+          {peopleByCategory[category].map((person: any) => (
+            <a
+              class="profile-card"
+              href={person.website}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img class="headshot" src={`${base}${person.picture}`} />
+              <div class="card-body flex-grow">
+                <h4>{person.name}</h4>
+                {showDetails && (
+                  <p>
+                    {person.role}, {person.affiliation}
+                  </p>
+                )}
+              </div>
+            </a>
+          ))}
+        </div>
+      </>
+    ) : (
+      <>
+        <h3 class={headingClass}>{categoryNames[category]}</h3>
+        <div class={`${classPrefix}__cards`}>
+          {peopleByCategory[category].map((person: any) => (
+            <a
+              class="profile-card"
+              href={person.website}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img class="headshot" src={`${base}${person.picture}`} />
+              <div class="card-body flex-grow">
+                <h4>{person.name}</h4>
+                {showDetails && (
+                  <p>
+                    {person.role}, {person.affiliation}
+                  </p>
+                )}
+              </div>
+            </a>
+          ))}
+        </div>
+      </>
+    ),
+  )
+}
+
+{
+  listCategories.map((category) => {
+    const people = peopleByCategory[category];
+    if (!people || people.length === 0) return null;
+
+    return wrapSections ? (
+      <>
+        <div class="content-width">
+          <h3 class={headingClass}>{categoryNames[category]}</h3>
+          <ul class={`${classPrefix}__list`}>
+            {people.map((person: any) => (
+              <li>
+                <a
+                  href={person.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {person.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </>
+    ) : (
+      <>
+        <h3 class={headingClass}>{categoryNames[category]}</h3>
+        <ul class={`${classPrefix}__list`}>
+          {people.map((person: any) => (
+            <li>
+              <a
+                href={person.website}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {person.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </>
+    );
+  })
+}

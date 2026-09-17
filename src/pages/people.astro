@@ -1,0 +1,20 @@
+---
+import Base from "../layouts/Base.astro";
+import PeopleSection from "../components/PeopleSection.astro";
+import peopleByCategory from "../data/people.json";
+import "../styles/people.scss";
+---
+
+<Base title="People">
+  <section class="people-page">
+    <div class="people-page__container content-width">
+      <h2 class="people-page__title">People</h2>
+    </div>
+
+    <PeopleSection
+      peopleByCategory={peopleByCategory}
+      classPrefix="people-page"
+      wrapSections={true}
+    />
+  </section>
+</Base>

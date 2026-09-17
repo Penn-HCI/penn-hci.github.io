@@ -1,0 +1,55 @@
+---
+import logo from "../assets/logo.svg";
+import "../styles/global.scss";
+interface Props {
+  title?: string;
+}
+const { title } = Astro.props;
+const baseUrl = import.meta.env.BASE_URL;
+const base = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="icon" href="/favicon_300.png" type="image/png" />
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>
+      {title ? `${title} - PENN HCI` : "PENN HCI"}
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav>
+      <div class="content-width flex-row align-center space-between">
+        <a class="nav-logo" href={`${base}/`}
+          ><img src={logo.src} alt="Penn HCI Logo" /></a
+        >
+        <div class="flex-row space-between w-full">
+          <div class="nav-left">
+            <!--
+            <a class="nav-link" href={`${base}/people`}
+              >people</a
+            >
+            -->
+            <a class="nav-link" href={`${base}/publications`}>publications</a>
+            <a class="nav-link" href={`${base}/courses`}>courses</a>
+          </div>
+          <div class="nav-right"></div>
+        </div>
+      </div>
+    </nav>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>

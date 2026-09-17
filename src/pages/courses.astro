@@ -1,0 +1,69 @@
+---
+import Base from "../layouts/Base.astro";
+import courses from "../data/courses.json";
+import { marked } from "marked";
+
+import "../styles/courses.scss";
+
+import circle from "../assets/lilgreycircle.svg";
+import triangle from "../assets/redobtuse.svg";
+import dots from "../assets/13x7grndots.svg";
+
+const renderedCourses = courses.map((course) => ({
+  ...course,
+  descriptionHtml: marked.parse(course.description),
+}));
+---
+
+<Base title="Courses">
+  <section class="courses-page">
+    <div class="courses-page__container content-width">
+      <h2 class="courses-page__title">Courses</h2>
+      <div class="courses-page__shapes">
+        <div class="courses-page__shapes__circle">
+          <img src={circle.src} />
+        </div>
+        <div class="courses-page__shapes__triangle">
+          <img src={triangle.src} />
+        </div>
+        <div class="courses-page__shapes__dots">
+          <img src={dots.src} />
+        </div>
+      </div>
+    </div>
+
+    <div class="courses-page__list content-width">
+      {
+        renderedCourses.map((course) => (
+          <div class="course-card">
+            <div class="course-card__code">{course.code}</div>
+            <h3 class="course-card__title course-card__title--mobile">
+              {course.title}
+            </h3>
+            <div class="course-card__content">
+              <h3 class="course-card__title course-card__title--desktop">
+                {course.title}
+              </h3>
+              <div
+                class="course-card__description"
+                set:html={course.descriptionHtml}
+              />
+              <div class="course-card__links">
+                {course.links.map((link) => (
+                  <a
+                    class="course-card__link"
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</Base>

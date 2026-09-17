@@ -1,0 +1,111 @@
+{
+  "pis": [
+    {
+      "name": "Andrew Head",
+      "role": "Assistant Professor",
+      "affiliation": "University of Pennsylvania",
+      "picture": "/people/andrew_head.png",
+      "website": "https://andrewhead.info/"
+    },
+    {
+      "name": "Danaé Metaxa",
+      "role": "Assistant Professor",
+      "affiliation": "University of Pennsylvania",
+      "picture": "/people/danae_metaxa.png",
+      "website": "https://metaxa.net/"
+    }
+  ],
+  "postdocs": [
+    {
+      "name": "Emma Lurie",
+      "role": "Postdoctoral Researcher",
+      "affiliation": "University of aniasylvania",
+      "picture": "/people/emma_lurie.jpg",
+      "website": "https://emmalurie.github.io/"
+    },
+    {
+      "name": "Alejandra Regla Vargas",
+      "role": "Postdoctoral Researcher",
+      "affiliation": "University of aniasylvania",
+      "picture": "/people/alejandra_regla_vargas.webp",
+      "website": "https://alejandraregla.com/"
+    }
+  ],
+  "phds": [
+    {
+      "name": "Hita Kambhamettu",
+      "role": "PhD Student",
+      "affiliation": "University of Pennsylvania",
+      "picture": "/people/hita_kambhamettu.png",
+      "website": "https://hita-k.github.io/"
+    },
+    {
+      "name": "Litao Yan",
+      "role": "PhD Student",
+      "affiliation": "University of Pennsylvania",
+      "picture": "/people/litao_yan.png",
+      "website": "https://yanlitao.github.io/"
+    },
+    {
+      "name": "Ro Encarnacion",
+      "role": "PhD Student",
+      "affiliation": "University of Pennsylvania",
+      "picture": "/people/ro_encarnacion.jpeg",
+      "website": "https://roencarnacion.com/"
+    },
+    {
+      "name": "Stephanie Wang",
+      "role": "PhD Student",
+      "affiliation": "University of Pennsylvania",
+      "picture": "/people/stephanie_wang.jpeg",
+      "website": "https://steph-w.github.io/"
+    },
+    {
+      "name": "Jeff Tao",
+      "aliases": ["Jeffrey Tao"],
+      "role": "PhD Student",
+      "affiliation": "University of Pennsylvania",
+      "picture": "/people/jeff_tao.jpg",
+      "website": "https://www.speculative.tech/"
+    },
+    {
+      "name": "Mialy Rasetarinera",
+      "role": "PhD Student",
+      "affiliation": "University of Pennsylvania",
+      "picture": "/people/mialy_rasetarinera.jpg",
+      "website": "https://mialynr.github.io/"
+    },
+    {
+      "name": "Xiaorui Liu",
+      "role": "PhD Student",
+      "affiliation": "University of Pennsylvania",
+      "picture": "/people/xiaorui_liu.jpg",
+      "website": "https://xiaoruiyliu.github.io/"
+    }
+  ],
+  "alumni": [
+    {
+      "name": "Jessica Shi",
+      "website": "https://jwshii.github.io/"
+    },
+    {
+      "name": "Alyssa Hwang",
+      "website": "https://alyssahwang.com/"
+    },
+    {
+      "name": "Harrison Goldstein",
+      "website": "https://harrisongoldste.in/"
+    }
+  ],
+  "students": [
+    {
+      "name": "Zain Khan",
+      "website": "https://www.linkedin.com/in/zain-khan-upenncs/"
+    },
+    {
+      "name": "Eric Dai",
+      "website": "https://www.linkedin.com/in/daieric/"
+    }
+  ],
+  "collaborators": []
+}
