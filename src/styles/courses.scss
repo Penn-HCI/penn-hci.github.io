@@ -193,8 +193,8 @@
   }
 }
 
-/* Hide decorative shapes on mobile */
-@media (width <= 640px) {
+/* Hide decorative shapes below desktop width to avoid overlapping content */
+@media (width <= 1023px) {
   .courses-page__shapes {
     display: none;
   }

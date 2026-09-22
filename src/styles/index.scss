@@ -107,7 +107,7 @@
     }
 
     &__title {
-      line-height: 1.1;
+      line-height: 0.95;
       font-size: 17vw;
     }
 
@@ -116,43 +116,7 @@
     }
 
     &__shapes {
-      position: relative;
-      top: 0;
-      right: 0;
-      height: auto;
-      margin-top: 1rem;
-    }
-
-    &__dots--small {
-      height: 36px;
-      width: 30px;
-      right: auto;
-      top: auto;
-      position: static;
-    }
-
-    &__dots--large {
-      height: 65px;
-      width: 42px;
-      right: auto;
-      top: auto;
-      position: static;
-    }
-
-    &__triangle--small {
-      height: 76px;
-      width: 88px;
-      right: auto;
-      top: auto;
-      position: static;
-    }
-
-    &__triangle--large {
-      height: 180px;
-      width: 208px;
-      right: auto;
-      top: auto;
-      position: static;
+      display: none;
     }
   }
 
@@ -162,15 +126,6 @@
 
     &__item {
       padding: 0.5rem 0;
-    }
-  }
-}
-
-/* Hide decorative shapes on mobile */
-@media (width <= 640px) {
-  .home-hero {
-    &__shapes {
-      display: none;
     }
   }
 }
