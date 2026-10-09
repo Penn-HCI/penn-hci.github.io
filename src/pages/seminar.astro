@@ -1,0 +1,85 @@
+---
+import Base from "../layouts/Base.astro";
+import seminar from "../data/seminar.json";
+
+import "../styles/seminar.scss";
+
+import oval from "../assets/connect_oval.svg";
+import triangle from "../assets/lilredtriangle.svg";
+import circle from "../assets/lilgreycircle.svg";
+import dots from "../assets/13x7grndots.svg";
+
+const calendarId = encodeURIComponent(seminar.calendarId);
+// Google Calendar's "cid" parameter is the base64-encoded calendar ID
+const addCalendarUrl = `https://calendar.google.com/calendar/u/0?cid=${btoa(seminar.calendarId).replace(/=+$/, "")}`;
+const embedCalendarUrl = `https://calendar.google.com/calendar/embed?src=${calendarId}&ctz=America%2FNew_York&mode=MONTH&showPrint=0&showTabs=0&showCalendars=0&showTz=0`;
+
+const formatDate = (iso: string) => {
+  const [year, month, day] = iso.split("-").map(Number);
+  return new Date(year, month - 1, day).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+};
+---
+
+<Base title="Seminar">
+  <section class="seminar-page">
+    <div class="seminar-page__container content-width">
+      <h2 class="seminar-page__title">Seminar</h2>
+      <p class="seminar-page__blurb">
+        The HCI seminar meets on Thursdays from 1:00&ndash;2:00 PM in Levine 307
+        or via Zoom.
+        <a
+          class="seminar-page__link"
+          href={addCalendarUrl}
+          target="_blank"
+          rel="noopener noreferrer">Add the seminar calendar to your calendar</a
+        >.
+      </p>
+      <div class="seminar-page__shapes">
+        <div class="seminar-page__shapes__oval">
+          <img src={oval.src} />
+        </div>
+        <div class="seminar-page__shapes__triangle">
+          <img src={triangle.src} />
+        </div>
+        <div class="seminar-page__shapes__circle">
+          <img src={circle.src} />
+        </div>
+        <div class="seminar-page__shapes__dots">
+          <img src={dots.src} />
+        </div>
+      </div>
+    </div>
+
+    <div class="seminar-page__speakers content-width">
+      <h3 class="seminar-page__subtitle">Upcoming speakers</h3>
+      <ul class="speaker-list">
+        {
+          seminar.speakers.map((speaker) => (
+            <li class="speaker-list__item">
+              <span class="speaker-list__date">{formatDate(speaker.date)}</span>
+              <a
+                class="speaker-list__name"
+                href={speaker.website}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {speaker.name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="seminar-page__calendar content-width">
+      <iframe
+        class="seminar-page__calendar__frame"
+        src={embedCalendarUrl}
+        title="Penn HCI seminar calendar"
+        loading="lazy"></iframe>
+    </div>
+  </section>
+</Base>

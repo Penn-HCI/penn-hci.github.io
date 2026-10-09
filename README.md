@@ -97,6 +97,20 @@ Edit `src/data/courses.json`:
 }
 ```
 
+### Updating seminar speakers
+
+Edit `src/data/seminar.json` and add an entry to `speakers` (listed in the order given, so keep them chronological):
+
+```json
+{
+  "date": "2026-10-22",
+  "name": "Speaker Name",
+  "website": "https://speaker.example.com/"
+}
+```
+
+The embedded calendar and "add to your calendar" link both come from `calendarId` in the same file.
+
 ### Adding a news item
 
 Edit `src/data/news.json` (shows on the homepage, newest generally first). `content` supports Markdown, including links:

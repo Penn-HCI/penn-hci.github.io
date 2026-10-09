@@ -1,0 +1,177 @@
+.seminar-page__container {
+  position: relative;
+  margin-top: 3rem;
+}
+
+.seminar-page__title {
+  color: var(--denim);
+  text-transform: lowercase;
+}
+
+.seminar-page__blurb {
+  position: relative;
+  z-index: 1;
+  max-width: 36rem;
+  margin-top: 1rem;
+  color: var(--dark-gray);
+  line-height: 1.5;
+}
+
+.seminar-page__link {
+  color: var(--denim);
+  text-decoration: underline;
+
+  &:hover {
+    color: var(--red);
+  }
+}
+
+.seminar-page__speakers {
+  position: relative;
+  z-index: 1;
+  margin-top: 2rem;
+}
+
+.seminar-page__subtitle {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: var(--dark-gray);
+}
+
+.speaker-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  list-style: none;
+
+  &__item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__date {
+    width: 5rem;
+    padding: 0.5rem;
+    flex-shrink: 0;
+
+    background-color: var(--denim);
+    color: var(--white);
+
+    font-weight: bold;
+    text-align: center;
+    border-radius: 4px;
+  }
+
+  &__name {
+    font-size: 1.125rem;
+    color: var(--dark-gray);
+    text-decoration: underline;
+
+    &:hover {
+      color: var(--red);
+    }
+  }
+}
+
+.seminar-page__calendar {
+  position: relative;
+  z-index: 1;
+  margin-top: 2.5rem;
+  margin-bottom: 3rem;
+
+  &__frame {
+    width: 100%;
+    height: 600px;
+    border: 1px solid var(--light-gray);
+    border-radius: 8px;
+  }
+}
+
+.seminar-page__shapes {
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  height: 300px;
+  z-index: 0;
+
+  div {
+    position: absolute;
+    transition:
+      top 0.5s ease-out,
+      right 0.5s ease-out;
+  }
+
+  &:hover {
+    .seminar-page__shapes__oval {
+      right: -120px;
+      top: 60px;
+    }
+
+    .seminar-page__shapes__triangle {
+      right: 220px;
+      top: 0;
+    }
+
+    .seminar-page__shapes__circle {
+      right: 40px;
+      top: 300px;
+    }
+
+    .seminar-page__shapes__dots {
+      right: 300px;
+      top: 340px;
+    }
+  }
+
+  &__oval {
+    height: 390px;
+    width: 399px;
+    top: 0;
+    right: -40px;
+  }
+
+  &__triangle {
+    height: 151px;
+    width: 175px;
+    top: 80px;
+    right: 160px;
+  }
+
+  &__circle {
+    height: 87px;
+    width: 87px;
+    top: 240px;
+    right: 0;
+  }
+
+  &__dots {
+    height: 125px;
+    width: 253px;
+    top: 300px;
+    right: 220px;
+  }
+}
+
+@media (width <= 1023px) {
+  .seminar-page__container {
+    margin-top: 1rem;
+  }
+
+  .seminar-page__speakers,
+  .seminar-page__calendar {
+    padding-right: 1rem;
+  }
+
+  .seminar-page__calendar__frame {
+    height: 450px;
+  }
+}
+
+/* Hide decorative shapes below desktop width to avoid overlapping content */
+@media (width <= 1023px) {
+  .seminar-page__shapes {
+    display: none;
+  }
+}
